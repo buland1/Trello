@@ -1,19 +1,46 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <v-app>
+    <!-- <Trello /> -->
+    <!-- <Card1 /> -->
+    <!-- <Card2 /> -->
+    <!-- <Card3 /> -->
+    <!-- <v-app> -->
+    <!-- <IssueList /> -->
+     <!-- <IssueList1 /> -->
+    <!-- <Test /> -->
+    <!-- <Abc /> -->
+    <Progress/>
+    </v-app>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+// import Trello from "./components/Trello.vue";
+// import Card1 from "./components/Card1.vue";
+// import Card2 from './components/Card2.vue'
+// import Card3 from './components/Card3.vue'
+// import IssueList from './components/issuelisting.vue'
+// import IssueList1 from './components/ListingBackup.vue'
+// import Test from './components/test.vue'
+// import Abc from './components/Abc.vue'
+import Progress from './components/progresscard.vue'
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    // Trello,
+    // Card1,
+    // Card2,
+    // Card3,
+    // IssueList,
+    // IssueList1,
+    // Test,
+    // Abc,
+    Progress
+  },
+};
 </script>
 
 <style>
