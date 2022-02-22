@@ -8,9 +8,10 @@
     <!-- <v-app> -->
     <!-- <IssueList /> -->
      <!-- <IssueList1 /> -->
-    <!-- <Test /> -->
+    <Test />
     <!-- <Abc /> -->
-    <Progress/>
+    <!-- <Progress/> -->
+    <!-- <backUp /> -->
     </v-app>
     
   </div>
@@ -23,10 +24,10 @@
 // import Card2 from './components/Card2.vue'
 // import Card3 from './components/Card3.vue'
 // import IssueList from './components/issuelisting.vue'
-// import IssueList1 from './components/ListingBackup.vue'
-// import Test from './components/test.vue'
+// import backUp from './components/ListingBackup.vue'
+import Test from './components/test.vue'
 // import Abc from './components/Abc.vue'
-import Progress from './components/progresscard.vue'
+// import Progress from './components/progresscard.vue'
 export default {
   name: "App",
   components: {
@@ -36,9 +37,10 @@ export default {
     // Card3,
     // IssueList,
     // IssueList1,
-    // Test,
+    Test,
     // Abc,
-    Progress
+    // Progress
+    // backUp,
   },
 };
 </script>

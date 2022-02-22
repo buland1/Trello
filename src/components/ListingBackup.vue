@@ -1,170 +1,273 @@
 <template>
   <div>
     <v-row>
+      <!----- Step 1 Creating an Issue Card--->
       <v-col md="4">
         <div id="issue">
           <v-card class="mx-auto" max-width="330">
             <v-card-text>
               <div><b>Issues</b></div>
             </v-card-text>
-            <v-card class="mx-auto" max-width="auto" max-height="auto">
-              <v-card-text>
-                <!-- <v-col cols="6" md ="12">
-                  <v-textarea label="" value=""></v-textarea>
-                </v-col> -->
+
+            <!--Inserting values in the card-->
+            <v-row>
+              <v-col cols="6" sm="12">
                 <v-card
+                  height="150px"
                   class="mb-2 pa-2"
                   color="#385F73"
                   dark
-                  v-for="(value, index) in issue_list"
+                  v-for="(value, index) in issueList"
                   :key="index"
                 >
-                  <!-- <v-card-title padding-bottom> {{ value.issueCase }}</v-card-title> -->
-                  <v-card class="text-sm-left pa-2 mb-2">{{value.issueCase}} </v-card>
-                  <p class="text-sm-left">{{ value.issuedesc }}</p>
-                  <!-- <p color="#385F73" dark align="left">Description</p> -->
+                  <v-card-title class="blue white--text">
+                    <span> {{ value.issueStatus }} </span>
 
-                  <!-- <v-card-subtitle class="text-h10">Description</v-card-subtitle> -->
+                    <v-spacer></v-spacer>
+
+                    <v-menu bottom left>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn dark icon v-bind="attrs" v-on="on">
+                          <v-icon>mdi-dots-vertical</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                          v-for="(item, x) in itemsArrow"
+                          :key="x"
+                          @click="clickArrow({ cardIndex: index, moveTo: x })"
+                        >
+                          <v-list-item-title>{{
+                            item.title
+                          }}</v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-card-title>
+
+                  <v-card-text
+                    ><h3
+                      class="white--text align-left pt-2"
+                      style="text-align: left"
+                    >
+                      {{ value.issueDescription }}
+                    </h3></v-card-text
+                  >
                 </v-card>
-              </v-card-text>
-              <!-- {{ issue_list }} -->
-            </v-card>
+              </v-col>
+            </v-row>
+
+            <!---- Step 4 Creating Add Issue Button-------->
             <v-card-actions>
-              <v-btn color="success" @click="dialog = true" block id="addbtn">
-                Create New Issue
+              <v-btn block color="purple" dark @click="dialog = true">
+                <v-icon dark left>mdi-plus-circle </v-icon> Add New Issue
               </v-btn>
             </v-card-actions>
           </v-card>
         </div>
       </v-col>
-      <v-col>
-         <div id = "onProgress">
+
+      <!-----Step 2 Creating a Processing Card--->
+      <v-col md="4">
         <v-card class="mx-auto" max-width="330">
           <v-card-text>
             <div><b>On Progress</b></div>
           </v-card-text>
+          <v-row>
+            <v-col>
+              <v-card
+                height="150px"
+                class="mb-2 pa-2"
+                color="#385F73"
+                dark
+                v-for="(value, idx) in onProgressList"
+                :key="idx"
+              >
+                <v-card-title class="blue white--text">
+                  <span> {{ value.issueStatus }} </span>
+                </v-card-title>
+                <v-card-text
+                  ><h3
+                    class="white--text align-left pt-2"
+                    style="text-align: left"
+                  >
+                    {{ value.issueDescription }}
+                  </h3></v-card-text
+                >
+              </v-card>
+            </v-col>
+          </v-row>
         </v-card>
-         </div>
-      </v-col> 
+      </v-col>
 
-      <v-col>
-         <div id = "closed">
+      <!-----Step 3 Creating a Completed Card--->
+      <v-col md="4">
         <v-card class="mx-auto" max-width="330">
           <v-card-text>
             <div><b>Completed and Closed</b></div>
           </v-card-text>
         </v-card>
-         </div>
-      </v-col> 
+      </v-col>
     </v-row>
-    <!--dialog box---->
-    <v-dialog v-model="dialog" persistent max-width="500px">
+
+    <!---- Step 5 Creating a dialog box----->
+    <v-dialog v-model="dialog" persistent max-width="400px">
       <v-card>
-        <v-card-title class="primary white--text">
-          <span class="title">Issue List</span>
+        <!---Diaogue Title --->
+        <v-card-title>
+          <span class="text-h5">Issue List</span>
         </v-card-title>
+        <!---Diaogue Text Areas --->
         <v-card-text>
-          <v-row>
-            <v-col sm="12">
-              <v-select
-                :items="['Critical', 'Minor', 'Major', 'Others']"
-                label="Issue"
-                v-model="status"
-              ></v-select>
-            </v-col>
-            <v-col sm="12">
-              <v-container fluid>
-                <v-textarea
-                  name="input-7-1"
-                  filled
-                  label="Description"
-                  auto-grow
-                  v-model="description"
-                ></v-textarea>
-              </v-container>
-            </v-col>
-          </v-row>
+          <v-col class="d-flex" cols="6" sm="6">
+            <v-select
+              :items="items"
+              label="Status"
+              v-model="status"
+              dense
+              solo
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="12">
+            <v-textarea
+              outlined
+              name="input-7-4"
+              label="Description"
+              v-model="description"
+              value=""
+            ></v-textarea>
+          </v-col>
         </v-card-text>
+
+        <!---Diaogue Actions --->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="warning" outlined @click="clearField()">Close</v-btn>
-          <v-btn color="success" outlined @click="save()">Save</v-btn>
-          <v-btn color="black" text @click="clearFieldSet()">Clear</v-btn>
+          <v-btn color="blue darken-1" text @click="clearField(0)">
+            Clear
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="clearField(1)">
+            Close
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="saveField()"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!---dialog box--->
   </div>
 </template>
+        
 
 <script>
 export default {
-  name: "Abc",
-  // created(){
-  //   this.save()
-  //   console.log("Created lifeCycle Hook is Created")
-  // },
+  name: "listingbackUp",
   data: () => ({
     status: "",
     description: "",
     dialog: false,
-    issue_list: [],
+    issueList: [],
+    onProgressList: [],
+    items: ["Critical", "Major", "Minor", "Urgent", "Others"],
+    itemsArrow: [
+      { title: "Move to On Processing" },
+      { title: "Move to Completed and Closed" },
+    ],
   }),
 
   mounted() {
-    this.fetchIssuesLS();
+    this.issueLocalStorage();
+    this.progressLocalStorage();
   },
 
+  // All types of functions are created in a methods
   methods: {
-    save() {
-      /**
-       * 1) Fetch Local storage saved issue list
-       * 2) If Yes ->
-       *    1)  parse old local storage value to js object (should become array)
-       *    2)  add new item to this array
-       *    3)  now save this new array to local storage
-       * 3) If No -> Save this value to local storage as array
-       */
+    clearField(status) {
+      if (status == 1) this.dialog = false; // Passing a parameter to close a dialog box
+      this.status = "";
+      this.description = "";
+    },
+    // closeField() {
+    //   this.dialog = false;
+    //   this.status="";
+    //   this.description="";
+    // },
+    saveField() {
+      let fetchIssueList = localStorage.getItem("issueList"); // get data from local storage
+      if (fetchIssueList === null) {
+        // console.log("if");
+        //checks whether the data is present in local storage or not
+        //JSON.stringify => Converts JavaScript Object or value to a JSON string
 
-      let fetchIssuesList = localStorage.getItem("issue_list");
-
-      if (fetchIssuesList === null) {
-        //stringify object and store
+        //syntax ==> localStorage.setItem(keyname, value): keyname= issueList and value= json.stingify
         localStorage.setItem(
-          "issue_list",
+          "issueList",
           JSON.stringify([
             {
-              issueCase: this.status,
-              issuedesc: this.description,
+              issueStatus: this.status,
+              issueDescription: this.description,
             },
           ])
         );
-
-        // No
       } else {
-        fetchIssuesList = JSON.parse(fetchIssuesList); //retrieve the object
-        fetchIssuesList.push({
-          issueCase: this.status,
-          issuedesc: this.description,
+        fetchIssueList = JSON.parse(fetchIssueList); // retreiving to the object
+        fetchIssueList.push({
+          issueStatus: this.status,
+          issueDescription: this.description,
         });
-        localStorage.setItem("issue_list", JSON.stringify(fetchIssuesList));
+        localStorage.setItem("issueList", JSON.stringify(fetchIssueList));
       }
-      this.clearField();
-      this.fetchIssuesLS();
+      this.clearField(1);
+      this.issueLocalStorage();
     },
-    clearField() {
-      this.dialog = false; //convert to parameter
-      this.status = "";
-      this.description = "";
+    issueLocalStorage() {
+      let issueStorage = localStorage.getItem("issueList");
+      if (issueStorage) {
+        this.issueList = JSON.parse(issueStorage);
+      }
     },
-    clearFieldSet() {
-      this.status = "";
-      this.description = "";
+    // clickArrow({ cardIndex, moveTo }) {
+    //   if (moveTo === 0) {
+    //     let onProgressList = this.issueList.splice(cardIndex, 1);
+    //     console.log(onProgressList)
+    //     // let fetchProgressList = localStorage.getItem("onProgressList");
+    //     let OnProgress = localStorage.getItem("onProgressList");
+    //     console.log(onProgress);
+    //     // if (fetchProgressList === null) {
+    //     //   localStorage.setItem(
+    //     //     "onProgressList",
+    //     //     JSON.stringify(this.onProgressList)
+    //     //   );
+
+    //     // } else {
+    //     //   fetchProgressList = JSON.parse(fetchProgressList);
+    //     //   onProgressList.push(this.onProgressList);
+    //     // }
+    //     this.progressLocalStorage();
+    //     localStorage.setItem("issueList", JSON.stringify(this.issueList));
+    //   }
+    // },
+     clickArrow({ cardIndex, moveTo }) {
+      if (moveTo === 0) {
+        let onProgressList = this.issueList.splice(cardIndex, 1);
+        let OnProgress = localStorage.getItem("onProgressList");
+        if (OnProgress === null) {
+          localStorage.setItem(
+            "onProgressList",
+            JSON.stringify(onProgressList)
+          );
+          console.log(onProgressList,'here...')
+        } else {
+          OnProgress = JSON.parse(OnProgress);
+          OnProgress.push(onProgressList[0]);
+          localStorage.setItem("onProgressList",JSON.stringify(OnProgress));
+        }
+        this.progressLocalStorage();
+        localStorage.setItem("issueList", JSON.stringify(this.issueList));
+      }
     },
-    fetchIssuesLS() {
-      let issuesList = localStorage.getItem("issue_list");
-      if (issuesList) {
-        this.issue_list = JSON.parse(issuesList);
+    progressLocalStorage() {
+      let progressStorage = localStorage.getItem("onProgressList");
+      if (progressStorage) {
+        this.onProgressList = JSON.parse(progressStorage);
       }
     },
   },

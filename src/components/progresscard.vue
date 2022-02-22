@@ -159,7 +159,7 @@
 
 <script>
 export default {
-  name: "Test",
+  name: "progressCard",
   data: () => ({
     status: "",
     description: "",
@@ -175,7 +175,7 @@ export default {
 
   mounted() {
     this.issueLocalStorage();
-    this.progressLocalStorage();
+    // this.progressLocalStorage();
   },
 
   // All types of functions are created in a methods
@@ -227,17 +227,31 @@ export default {
     clickArrow({ cardIndex, moveTo }) {
       if (moveTo === 0) {
         let onProgressList = this.issueList.splice(cardIndex, 1);
-        localStorage.setItem("onProgressList", JSON.stringify(onProgressList));
-        this.progressLocalStorage();
-        localStorage.setItem("issueList", JSON.stringify(this.issueList));
+        let OnProgress = localStorage.getItem("onProgressList");
+        console.log(onProgressList ,onProgressList.issueDescription)
+        if(OnProgress === null){
+          console.log('if',onProgressList)
+          localStorage.setItem("onProgressList", JSON.stringify(onProgressList));
+        }else{
+          OnProgress = JSON.parse(OnProgress)
+          console.log(typeof OnProgress, typeof onProgressList,onProgressList)
+          let test = []
+          let progressList = test.push({
+            issueStatus:'here',
+            issueDescription:'desc'
+          })
+          console.log(progressList)
+        }
+        // this.progressLocalStorage();
+        // localStorage.setItem("issueList", JSON.stringify(this.issueList));
       }
     },
-    progressLocalStorage() {
-      let progressStorage = localStorage.getItem("onProgressList");
-      if (progressStorage) {
-        this.onProgressList = JSON.parse(progressStorage);
-      }
-    },
+    // progressLocalStorage() {
+    //   let progressStorage = localStorage.getItem("onProgressList");
+    //   if (progressStorage) {
+    //     this.onProgressList = JSON.parse(progressStorage);
+    //   }
+    // },
   },
 };
 </script>
