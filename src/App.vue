@@ -8,9 +8,9 @@
     <!-- <v-app> -->
     <!-- <IssueList /> -->
      <!-- <IssueList1 /> -->
-    <Test />
+    <!-- <Test /> -->
     <!-- <Abc /> -->
-    <!-- <Progress/> -->
+    <progressCard/>
     <!-- <backUp /> -->
     </v-app>
     
@@ -25,9 +25,9 @@
 // import Card3 from './components/Card3.vue'
 // import IssueList from './components/issuelisting.vue'
 // import backUp from './components/ListingBackup.vue'
-import Test from './components/test.vue'
+// import Test from './components/test.vue'
 // import Abc from './components/Abc.vue'
-// import Progress from './components/progresscard.vue'
+import progressCard from './components/progresscard.vue'
 export default {
   name: "App",
   components: {
@@ -37,9 +37,9 @@ export default {
     // Card3,
     // IssueList,
     // IssueList1,
-    Test,
+    // Test,
     // Abc,
-    // Progress
+    progressCard
     // backUp,
   },
 };
