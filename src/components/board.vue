@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-row>
+        <div class="issueS">
+        <div class="cards" draggable="true"></div>
+    </div>
       <!----- Step 1 Creating an Issue Card--->
+      
       <v-col md="4">
         <div id="issue">
           <v-card class="mx-auto" max-width="330">
@@ -10,6 +14,7 @@
             </v-card-text>
 
             <!--Inserting values in the card-->
+            <!-- <div class="issueS"> -->
             <v-row>
               <v-col cols="6" sm="12">
                 <v-card
@@ -57,6 +62,7 @@
                 </v-card>
               </v-col>
             </v-row>
+            <!-- </div> -->
 
             <!---- Step 4 Creating Add Issue Button-------->
             <v-card-actions>
@@ -67,8 +73,10 @@
           </v-card>
         </div>
       </v-col>
+      
 
       <!-----Step 2 Creating a Processing Card--->
+      <div class="issueS">
       <v-col md="4">
         <v-card class="mx-auto" max-width="330">
           <v-card-text>
@@ -129,8 +137,10 @@
           </v-row>
         </v-card>
       </v-col>
+      </div>
 
       <!-----Step 3 Creating a Completed Card--->
+      <div class="issueS">
       <v-col md="4">
         <v-card class="mx-auto" max-width="330">
           <v-card-text>
@@ -191,6 +201,7 @@
           </v-row>
         </v-card>
       </v-col>
+      </div>
     </v-row>
 
     <!---- Step 5 Creating a dialog box----->
@@ -250,7 +261,7 @@
 
 <script>
 export default {
-  name: "progressCard",
+  name: "trelloBoard",
   data: () => ({
     status: "",
     description: "",
@@ -472,6 +483,15 @@ export default {
     },
   },
 };
+// const issueS = document.querySelector('.issueS');
+// const card = document.getElementsByClassName('cards');
+// console.log(card)
+// issueS.addEventListener('dragstart', ()=>{
+//     console.log('Dragstart Triggered');
+// })
+// issueS.addEventListener('dragend', ()=>{
+//     console.log('Dragend Triggered');
+// })
 </script>
 
 <style>

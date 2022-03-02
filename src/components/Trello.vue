@@ -226,7 +226,7 @@
 
 <script>
 export default {
-  name: "Test",
+  name: "Trello",
   data: () => ({
     status: "",
     description: "",
