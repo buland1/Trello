@@ -2,16 +2,11 @@
   <div>
     <v-app>
     <!-- <Trello /> -->
-    <!-- <Card1 /> -->
-    <!-- <Card2 /> -->
-    <!-- <Card3 /> -->
-    <!-- <v-app> -->
-    <!-- <IssueList /> -->
-     <!-- <IssueList1 /> -->
-    <!-- <Test /> -->
-    <!-- <Abc /> -->
-    <progressCard/>
-    <!-- <backUp /> -->
+    <Test />
+    <!-- <progressCard/> -->
+    <!-- <listingbackUp /> -->
+    <!-- <trelloBoard /> -->
+    <!-- <dragDrop/> -->
     </v-app>
     
   </div>
@@ -19,28 +14,22 @@
 
 <script>
 
-// import Trello from "./components/Trello.vue";
-// import Card1 from "./components/Card1.vue";
-// import Card2 from './components/Card2.vue'
-// import Card3 from './components/Card3.vue'
-// import IssueList from './components/issuelisting.vue'
-// import backUp from './components/ListingBackup.vue'
-// import Test from './components/test.vue'
-// import Abc from './components/Abc.vue'
-import progressCard from './components/progresscard.vue'
+// import listingbackUp from './components/ListingBackup.vue'
+import Test from './components/test.vue'
+// import progressCard from './components/progresscard.vue'
+// import Trello from './components/Trello.vue';
+// import trelloBoard from './components/board.vue';
+// import dragDrop from './components/dragDrop.vue'
+
 export default {
   name: "App",
   components: {
     // Trello,
-    // Card1,
-    // Card2,
-    // Card3,
-    // IssueList,
-    // IssueList1,
-    // Test,
-    // Abc,
-    progressCard
-    // backUp,
+    Test,
+    // progressCard,
+    // listingbackUp,
+    // trelloBoard,
+    // dragDrop,
   },
 };
 </script>

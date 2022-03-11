@@ -6,18 +6,98 @@
         <div id="issue">
           <v-card class="mx-auto" max-width="330">
             <v-card-text>
-              <div><b>Issues</b></div>
+              <div id="issueHere"><b>Issues</b></div>
             </v-card-text>
 
             <!--Inserting values in the card-->
             <v-row>
               <v-col cols="6" sm="12">
+                <draggable
+                  class="issue-list-group"
+                  group="people"
+                  @end="onEnd"
+                  @drag="clickArrow({ cardIndex: index, moveTo: x })"
+                >
+                  <v-card
+                    :list="issueList"
+                    height="150px"
+                    class="mb-2 pa-2"
+                    color="#385F73"
+                    dark
+                    v-for="(value, index) in issueList"
+                    :key="index"
+                  >
+                    <v-card-title class="blue white--text">
+                      <span> {{ value.issueStatus }} </span>
+
+                      <v-spacer></v-spacer>
+
+                      <v-menu bottom left>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn dark icon v-bind="attrs" v-on="on">
+                            <v-icon>mdi-dots-vertical</v-icon>
+                          </v-btn>
+                        </template>
+
+                        <v-list>
+                          <v-list-item
+                            v-for="(item, x) in itemsArrow"
+                            :key="x"
+                            @click="clickArrow({ cardIndex: index, moveTo: x })"
+                          >
+                            <v-list-item-title>{{
+                              item.title
+                            }}</v-list-item-title>
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </v-card-title>
+
+                    <v-card-text
+                      ><h3
+                        class="white--text align-left pt-2"
+                        style="text-align: left"
+                      >
+                        {{ value.issueDescription }}
+                      </h3></v-card-text
+                    >
+                  </v-card>
+                </draggable>
+              </v-col>
+            </v-row>
+
+            <!---- Step 4 Creating Add Issue Button-------->
+            <v-card-actions>
+              <v-btn block color="purple" dark @click="dialog = true">
+                <v-icon dark left>mdi-plus-circle </v-icon> Add New Issue
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </div>
+      </v-col>
+
+      <!-----Step 2 Creating a Processing Card--->
+      <v-col md="4">
+        <v-card class="mx-auto" max-width="330">
+          <v-card-text>
+            <div id="progresHere"><b>On Progress</b></div>
+          </v-card-text>
+          <v-row>
+            <v-col cols="6" sm="12">
+              <draggable
+                class="onprogress-list-group"
+                group="people"
+                @end="onEnd"
+                cardIndex:index
+                @drag="clickArrow1({ cardIndex: index, moveTo: y })"
+              >
+                <!-- @end="onEnd" -->
                 <v-card
                   height="150px"
                   class="mb-2 pa-2"
                   color="#385F73"
                   dark
-                  v-for="(value, index) in issueList"
+                  v-for="(value, index) in onProgressList"
                   :key="index"
                 >
                   <v-card-title class="blue white--text">
@@ -34,9 +114,9 @@
 
                       <v-list>
                         <v-list-item
-                          v-for="(item, x) in itemsArrow"
-                          :key="x"
-                          @click="clickArrow({ cardIndex: index, moveTo: x })"
+                          v-for="(item, y) in itemsArrow2"
+                          :key="y"
+                          @click="clickArrow1({ cardIndex: index, moveTo: y })"
                         >
                           <v-list-item-title>{{
                             item.title
@@ -55,69 +135,7 @@
                     </h3></v-card-text
                   >
                 </v-card>
-              </v-col>
-            </v-row>
-
-            <!---- Step 4 Creating Add Issue Button-------->
-            <v-card-actions>
-              <v-btn block color="purple" dark @click="dialog = true">
-                <v-icon dark left>mdi-plus-circle </v-icon> Add New Issue
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </div>
-      </v-col>
-
-      <!-----Step 2 Creating a Processing Card--->
-      <v-col md="4">
-        <v-card class="mx-auto" max-width="330">
-          <v-card-text>
-            <div><b>On Progress</b></div>
-          </v-card-text>
-
-          <v-row>
-            <v-col cols="6" sm="12">
-              <v-card
-                height="150px"
-                class="mb-2 pa-2"
-                color="#385F73"
-                dark
-                v-for="(value, index) in onProgressList"
-                :key="index"
-              >
-                <v-card-title class="blue white--text">
-                  <span> {{ value.issueStatus }} </span>
-
-                  <v-spacer></v-spacer>
-
-                  <v-menu bottom left>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn dark icon v-bind="attrs" v-on="on">
-                        <v-icon>mdi-dots-vertical</v-icon>
-                      </v-btn>
-                    </template>
-
-                    <v-list>
-                      <v-list-item
-                        v-for="(item, y) in itemsArrow2"
-                        :key="y"
-                        @click="clickArrow1({ cardIndex: index, moveTo: y })"
-                      >
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </v-card-title>
-
-                <v-card-text
-                  ><h3
-                    class="white--text align-left pt-2"
-                    style="text-align: left"
-                  >
-                    {{ value.issueDescription }}
-                  </h3></v-card-text
-                >
-              </v-card>
+              </draggable>
             </v-col>
           </v-row>
         </v-card>
@@ -127,51 +145,60 @@
       <v-col md="4">
         <v-card class="mx-auto" max-width="330">
           <v-card-text>
-            <div><b>Completed and Closed</b></div>
+            <div id="closedHere"><b>Completed and Closed</b></div>
           </v-card-text>
           <v-row>
             <v-col cols="6" sm="12">
-              <v-card
-                height="150px"
-                class="mb-2 pa-2"
-                color="#385F73"
-                dark
-                v-for="(value, index) in completedList"
-                :key="index"
+              <draggable
+                class="closed-list-group"
+                group="people"
+                @end="onEnd"
+                @drag="clickArrow2({ cardIndex: index, moveTo: x })"
               >
-                <v-card-title class="blue white--text">
-                  <span> {{ value.issueStatus }} </span>
-
-                  <v-spacer></v-spacer>
-
-                  <v-menu bottom left>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn dark icon v-bind="attrs" v-on="on">
-                        <v-icon>mdi-dots-vertical</v-icon>
-                      </v-btn>
-                    </template>
-
-                    <v-list>
-                      <v-list-item
-                        v-for="(item, z) in itemsArrow3"
-                        :key="z"
-                        @click="clickArrow2({ cardIndex: index, moveTo: z })"
-                      >
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </v-card-title>
-
-                <v-card-text
-                  ><h3
-                    class="white--text align-left pt-2"
-                    style="text-align: left"
-                  >
-                    {{ value.issueDescription }}
-                  </h3></v-card-text
+                <v-card
+                  height="150px"
+                  class="mb-2 pa-2"
+                  color="#385F73"
+                  dark
+                  v-for="(value, index) in completedList"
+                  :key="index"
                 >
-              </v-card>
+                  <v-card-title class="blue white--text">
+                    <span> {{ value.issueStatus }} </span>
+
+                    <v-spacer></v-spacer>
+
+                    <v-menu bottom left>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn dark icon v-bind="attrs" v-on="on">
+                          <v-icon>mdi-dots-vertical</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <v-list>
+                        <v-list-item
+                          v-for="(item, z) in itemsArrow3"
+                          :key="z"
+                          @click="clickArrow2({ cardIndex: index, moveTo: z })"
+                        >
+                          <v-list-item-title>{{
+                            item.title
+                          }}</v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-card-title>
+
+                  <v-card-text
+                    ><h3
+                      class="white--text align-left pt-2"
+                      style="text-align: left"
+                    >
+                      {{ value.issueDescription }}
+                    </h3></v-card-text
+                  >
+                </v-card>
+              </draggable>
             </v-col>
           </v-row>
         </v-card>
@@ -225,13 +252,19 @@
         
 
 <script>
+import draggable from "vuedraggable";
 export default {
   name: "Test",
+  components: {
+    draggable,
+  },
   data: () => ({
     status: "",
     description: "",
     dialog: false,
+    draggable: true,
     issueList: [],
+    // hellIssue: [],
     onProgressList: [],
     completedList: [],
     items: ["Critical", "Major", "Minor", "Urgent", "Others"],
@@ -255,26 +288,20 @@ export default {
     this.completedStorage();
   },
 
-  // All types of functions are created in a methods
   methods: {
     clearField(status) {
-      if (status == 1) this.dialog = false; // Passing a parameter to close a dialog box
+      if (status == 1) this.dialog = false;
       this.status = "";
       this.description = "";
     },
-    // closeField() {
-    //   this.dialog = false;
-    //   this.status="";
-    //   this.description="";
-    // },
+    closeField() {
+      this.dialog = false;
+      this.status = "";
+      this.description = "";
+    },
     saveField() {
-      let fetchIssueList = localStorage.getItem("issueList"); // get data from local storage
-      if (fetchIssueList === null) {
-        // console.log("if");
-        //checks whether the data is present in local storage or not
-        //JSON.stringify => Converts JavaScript Object or value to a JSON string
-
-        //syntax ==> localStorage.setItem(keyname, value): keyname= issueList and value= json.stingify
+      let fetchIssueList = localStorage.getItem("issueList");
+      if (fetchIssueList === null || !fetchIssueList) {
         localStorage.setItem(
           "issueList",
           JSON.stringify([
@@ -425,9 +452,104 @@ export default {
         this.completedList = JSON.parse(completedStorage);
       }
     },
+    onEnd(e) {
+      const fromClass = e.from.className;
+      const oldIndex = e.oldIndex;
+
+      const toClass = e.to.className;
+      // const newIndex = e.newIndex;
+
+      let movedElement = null;
+      console.log(movedElement);
+
+      let removeFromSection = "";
+
+      if (fromClass === "issue-list-group") {
+        removeFromSection = "issueList";
+      } else if (fromClass === "onprogress-list-group") {
+        removeFromSection = "onProgressList";
+      } else if (fromClass === "closed-list-group") {
+        removeFromSection = "completedList";
+      } else {
+        console.log("Sorry this time");
+      }
+
+      let hellIssue = localStorage.getItem(removeFromSection);
+      hellIssue = JSON.parse(hellIssue);
+      movedElement = hellIssue.splice(oldIndex, 1);
+      movedElement = movedElement[0];
+      localStorage.setItem(removeFromSection, JSON.stringify(hellIssue));
+
+      let getToSection = "";
+      if (toClass === "issue-list-group") {
+        getToSection = "issueList";
+      } else if (toClass === "onprogress-list-group") {
+        getToSection = "onProgressList";
+      } else if (toClass === "closed-list-group") {
+        getToSection = "completedList";
+      } else {
+        console.log("Sorry this time");
+      }
+
+        let hellProgress = localStorage.getItem(getToSection);
+        hellProgress = JSON.parse(hellProgress);
+        if (hellProgress === null || !hellProgress) {
+          localStorage.setItem(
+            getToSection,
+            JSON.stringify([movedElement])
+          );
+        } else {
+          hellProgress.push(movedElement);
+          localStorage.setItem(getToSection, JSON.stringify(hellProgress));
+        }
+        console.log(getToSection)
+      // if (toClass === "onprogress-list-group") {
+      //   let hellProgress = localStorage.getItem("onProgressList");
+      //   hellProgress = JSON.parse(hellProgress);
+      //   if (hellProgress === null || !hellProgress) {
+      //     localStorage.setItem(
+      //       "onProgressList",
+      //       JSON.stringify([movedElement])
+      //     );
+      //   } else {
+      //     hellProgress.push(movedElement);
+      //     localStorage.setItem("onProgressList", JSON.stringify(hellProgress));
+      //   }
+      // } else if (toClass === "closed-list-group") {
+      //   let hellClosed = localStorage.getItem("completedList");
+      //   hellClosed = JSON.parse(hellClosed);
+      //   if (hellClosed === null || !hellClosed) {
+      //     localStorage.setItem("completedList", JSON.stringify([movedElement]));
+      //   } else {
+      //     hellClosed.push(movedElement);
+      //     localStorage.setItem("completedList", JSON.stringify(hellClosed));
+      //   }
+      // } else if (toClass === "issue-list-group") {
+      //   let hellIssue = localStorage.getItem("issueList");
+      //   hellIssue = JSON.parse(hellIssue);
+      //   if (hellIssue === null || !hellIssue) {
+      //     localStorage.setItem("issueList", JSON.stringify([movedElement]));
+      //   } else {
+      //     hellIssue.push(movedElement);
+      //     localStorage.setItem("issueList", JSON.stringify(hellIssue));
+      //   }
+      // } else {
+      //   console.log("Are you doing things correctly??");
+      // }
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
+.issue-list-group {
+  min-height: 20px;
+}
+
+.onprogress-list-group {
+  min-height: 100px;
+}
+.closed-list-group {
+  min-height: 100px;
+}
 </style>
